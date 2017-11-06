@@ -1,0 +1,376 @@
+{% extends "login_success.html" %}
+
+{% block body %}
+
+<form action="" method="post" name="submit_date">
+    {% raw xsrf_form_html() %}
+    <input type="date" name="begin_date" value=""/>
+    <input type="date" name="end_date" value=""/>
+    <input type="submit" name="day_submit" value="按日期查看">
+    <input type="month" name="begin_month" value=""/>
+    <input type="month" name="end_month" value=""/>
+    <input type="submit" name="month_submit" value="按月份查看">
+</form>
+
+<script src="{{static_url("echarts.js")}}"></script>
+    <div id="mobile" style="width: auto;height:400px;"></div>
+        <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_mobile = echarts.init(document.getElementById('mobile'));
+
+        // 指定图表的配置项和数据
+        {% autoescape None %}
+        var option = {
+    title: {
+        text: '每日销量(手机)',
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:{{mobile_a_keys}}
+    },
+    xAxis: {
+	    type: 'category',
+        data: {{ date }},
+		axisPointer:{
+		    type: 'shadow'
+		}
+
+    },
+    yAxis: [
+        {
+            type: 'value',
+            name: '数量',
+            interval:1,
+            axisLabel: {
+                formatter: '{value} 台'
+            }
+        },
+        {
+            type: 'value',
+            name: '收入',
+            interval: 100,
+            axisLabel: {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series: [
+            {% for i in mobile_b %}
+            {
+                name: '{{ (i[0].encode('utf-8')) }}',
+                type: 'bar',
+                data: {{ i[1] }}
+            },
+            {% end %}
+			{
+            name:'收入',
+            type:'line',
+            yAxisIndex: 1,
+            data:{{mobile_c}}
+            }
+    ],
+
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_mobile.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart_mobile.resize();
+        });
+    </script>
+
+
+
+
+
+<div id="parts" style="width: auto;height:400px;"></div>
+        <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_parts = echarts.init(document.getElementById('parts'));
+
+        // 指定图表的配置项和数据
+        {% autoescape None %}
+        var option = {
+    title: {
+        text: '每日销量(配件)',
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:{{parts_a_keys}}
+    },
+    xAxis: {
+	    type: 'category',
+        data: {{ date }},
+		axisPointer:{
+		    type: 'shadow'
+		}
+
+    },
+    yAxis: [
+        {
+            type: 'value',
+            name: '数量',
+            interval:1,
+            axisLabel: {
+                formatter: '{value} 台'
+            }
+        },
+        {
+            type: 'value',
+            name: '收入',
+            interval: 100,
+            axisLabel: {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series: [
+            {% for i in parts_b %}
+            {
+                name: '{{ (i[0].encode('utf-8')) }}',
+                type: 'bar',
+                data: {{ i[1] }}
+            },
+            {% end %}
+			{
+            name:'收入',
+            type:'line',
+            yAxisIndex: 1,
+            data:{{parts_c}}
+            }
+    ],
+
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_parts.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart_parts.resize();
+        });
+    </script>
+
+
+
+
+
+
+
+<div id="card" style="width: auto;height:400px;"></div>
+        <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_card = echarts.init(document.getElementById('card'));
+
+        // 指定图表的配置项和数据
+        {% autoescape None %}
+        var option = {
+    title: {
+        text: '每日销量(号码卡)',
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data:{{card_a_keys}}
+    },
+    xAxis: {
+	    type: 'category',
+        data: {{ date }},
+		axisPointer:{
+		    type: 'shadow'
+		}
+
+    },
+    yAxis: [
+        {
+            type: 'value',
+            name: '数量',
+            interval:1,
+            axisLabel: {
+                formatter: '{value} 台'
+            }
+        },
+        {
+            type: 'value',
+            name: '收入',
+            interval: 100,
+            axisLabel: {
+                formatter: '{value} 元'
+            }
+        }
+    ],
+    series: [
+            {% for i in card_b %}
+            {
+                name: '{{ (i[0].encode('utf-8')) }}',
+                type: 'bar',
+                data: {{ i[1] }}
+            },
+            {% end %}
+			{
+            name:'收入',
+            type:'line',
+            yAxisIndex: 1,
+            data:{{card_c}}
+            }
+    ],
+
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_card.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart_card.resize();
+        });
+    </script>
+
+
+
+
+
+
+
+<div id="all" style="width: auto;height:400px;"></div>
+        <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_all = echarts.init(document.getElementById('all'));
+
+        // 指定图表的配置项和数据
+        {% autoescape None %}
+        var option = {
+    title : {
+        text: '收入总计',
+        subtext: '手机+配件+号码卡',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['手机','配件','号码卡']
+    },
+    series : [
+        {
+            name: '收入',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:{{sum(mobile_c)}}, name:'手机'},
+                {value:{{sum(parts_c)}}, name:'配件'},
+                {value:{{sum(card_c)}}, name:'号码卡'},
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_all.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart_all.resize();
+        });
+    </script>
+
+
+<div id="fenxi" style="width: auto;height:400px;"></div>
+        <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart_fenxi = echarts.init(document.getElementById('fenxi'));
+
+        // 指定图表的配置项和数据
+        {% autoescape None %}
+        var option = {
+
+    // Make gradient line here
+    visualMap: [{
+        show: false,
+        type: 'continuous',
+        seriesIndex: 0,
+        min: 0,
+        max: 400
+    }, ],
+
+
+    title: [{
+        left: 'center',
+        text: '收入折线图'
+    }, ],
+    tooltip: {
+        trigger: 'axis'
+    },
+    xAxis: [{
+        data: {{date}}
+    }, ],
+    yAxis: [{
+        splitLine: {show: false}
+    }, ],
+    grid: [{
+        bottom: '60%'
+    }, ],
+    series: [{
+        type: 'line',
+        showSymbol: false,
+        data: {{all_data}}
+    }, ]
+};
+        // 使用刚指定的配置项和数据显示图表。
+        myChart_fenxi.setOption(option);
+        window.addEventListener("resize",function(){
+            myChart_fenxi.resize();
+        });
+    </script>
+
+
+
+{% end %}
